@@ -10,6 +10,7 @@ const spotifyUrl = 'https://open.spotify.com/track/3Z8hY7Drj0nZ6f5YpCKTg1';
 const spotifyUri = 'spotify:track:3Z8hY7Drj0nZ6f5YpCKTg1';
 const spotifyPlayer = document.querySelector('#spotify-player');
 let spotify = null;
+const lyricsStart = 30; // seconds: where the lyrics begin
 const revealables = [...document.querySelectorAll('.letter p, .reveal')];
 
 function setDawn() {
@@ -42,6 +43,7 @@ song.querySelector('source').addEventListener('error', () => {
 async function playSong() {
   if (spotify) { spotify.resume(); return; }
   if (songMissing) { playOnSpotify(); return; }
+  if (song.currentTime < lyricsStart) song.currentTime = lyricsStart;
   try { await song.play(); }
   catch { playOnSpotify(); }
 }
@@ -55,8 +57,16 @@ function playOnSpotify() {
     { uri: spotifyUri, width: '100%', height: 80 },
     controller => {
       spotify = controller;
+      let skippedIntro = false;
       controller.addListener('ready', () => controller.play());
-      controller.addListener('playback_update', event => setMusicButton(!event.data.isPaused));
+      controller.addListener('playback_update', ({ data }) => {
+        setMusicButton(!data.isPaused);
+        // Jump to the lyrics once playback starts. The 30-second preview can't seek, so only the full song does.
+        if (!skippedIntro && !data.isPaused && data.duration > 60000) {
+          skippedIntro = true;
+          if (data.position < lyricsStart * 1000) controller.seek(lyricsStart);
+        }
+      });
     }
   );
 }
