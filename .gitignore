@@ -1,0 +1,9 @@
+# Copyrighted audio: add locally, don't commit
+assets/*.mp3
+
+# Local scratch folders
+outputs/
+work/
+
+.DS_Store
+Thumbs.db

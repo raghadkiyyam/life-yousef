@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#10182f" />
+    <title>Life, Yousef</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=DM+Sans:wght@400;500&family=Great+Vibes&family=Nanum+Pen+Script&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <audio id="love-song" preload="auto" loop>
+      <!-- Add a legally obtained file at assets/love-song-311.mp3 to enable the requested music. -->
+      <source src="assets/love-song-311.mp3" type="audio/mpeg" />
+    </audio>
+
+    <main id="experience">
+      <div class="sky" aria-hidden="true">
+        <div class="stars"></div><div class="aurora"></div>
+        <div class="cloud cloud-one"></div><div class="cloud cloud-two"></div>
+        <div class="sun-glow"></div><div class="sun"></div>
+        <div class="horizon"></div><div class="foreground"></div>
+      </div>
+
+      <section class="cover" id="cover">
+        <div class="cover-inner">
+          <p class="eyebrow">a love letter at dawn</p>
+          <h1>Life,<br /><em>Yousef</em></h1>
+          <p class="subtitle">You are the light I didn't know I was waiting for.</p>
+          <button id="begin" type="button">Tap or click to begin <span>✦</span></button>
+          <p class="audio-note" id="audio-note" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <div class="journey" aria-label="A love letter for Yousef">
+        <div class="letter">
+          <div class="music-note" aria-label="Love Song by 311">
+            <span class="music-mark" aria-hidden="true">♫</span>
+            <a class="track" href="https://open.spotify.com/track/3Z8hY7Drj0nZ6f5YpCKTg1" target="_blank" rel="noopener" aria-label="Open Love Song by 311 on Spotify"><small>now playing</small><strong>Love Song <i>—</i> 311</strong></a>
+            <button class="music-toggle" id="music-toggle" type="button" aria-label="Play Love Song" aria-pressed="false"><span aria-hidden="true">▶</span></button>
+          </div>
+          <p>I want you to know something I hope you never forget.</p>
+          <p>Since the very first day, I have looked at you and seen a hero.</p>
+          <p>But the more I know you, the more I realize that even the word ‘hero’ feels too small for you.</p>
+          <p>Because your strength isn't only in the things you can do. It's in the way you care, the way you keep going, and the quiet way you make the people around you feel safe.</p>
+          <p>You are the safest person I know.</p>
+          <p>And somehow, you became so much more than someone I love.</p>
+          <p>You became one of the reasons I look forward to tomorrow.</p>
+          <p>One of the reasons ordinary mornings feel worth waking up for.</p>
+          <p>One of the reasons I find myself breathing a little deeper, smiling a little easier, and seeing a little more beauty in life.</p>
+          <p>You are the sweetest thing that has ever happened to me.</p>
+          <p>And if I had to find one thing in this world that could describe what you mean to me…</p>
+          <p>It would be sunrise.</p>
+          <p>Because that is what you feel like.</p>
+          <p>The first light after a long night.</p>
+          <p>The warmth that reminds me that there is always something beautiful waiting for me in another day.</p>
+          <p>I saw a hero in you from day one.</p>
+          <p>But day by day, I discover that you are stronger, kinder, safer, and more extraordinary than that word could ever explain.</p>
+        </div>
+
+        <section class="climax reveal">
+          <p>You don't just brighten my days.</p><p>You make me want to live them happily.</p>
+          <span class="pause">✦</span>
+          <p class="last-line">And I hope you never forget how much light you bring into my life.</p>
+        </section>
+
+        <section class="ending reveal">
+          <p>If I were given the chance to live every moment of my life again…</p>
+          <p class="find-you">I would still find my way to you.</p>
+          <h2>Every time.</h2>
+          <p class="lifetimes">In every sunrise.<br />In every lifetime.<br />In every universe.<br /><span>I love you so much.</span></p>
+          <p class="signature">Raghad</p>
+          <div class="share-letter">
+            <button id="share-letter" type="button">Send this letter <span>↗</span></button>
+            <p id="share-note" aria-live="polite"></p>
+          </div>
+        </section>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
