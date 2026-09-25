@@ -7,6 +7,9 @@ const musicToggle = document.querySelector('#music-toggle');
 const shareLetter = document.querySelector('#share-letter');
 const shareNote = document.querySelector('#share-note');
 const spotifyUrl = 'https://open.spotify.com/track/3Z8hY7Drj0nZ6f5YpCKTg1';
+const spotifyUri = 'spotify:track:3Z8hY7Drj0nZ6f5YpCKTg1';
+const spotifyPlayer = document.querySelector('#spotify-player');
+let spotify = null;
 const revealables = [...document.querySelectorAll('.letter p, .reveal')];
 
 function setDawn() {
@@ -26,9 +29,39 @@ addEventListener('scroll', update, { passive:true }); addEventListener('resize',
 begin.addEventListener('click', async () => {
   cover.classList.add('is-gone');
   window.scrollTo({ top: innerHeight * .56, behavior:'smooth' });
-  try { await song.play(); }
-  catch { openSpotify(); }
+  playSong();
 });
+
+// Plays the local mp3 if there is one; otherwise plays the song in an embedded Spotify player.
+let songMissing = false;
+song.querySelector('source').addEventListener('error', () => {
+  songMissing = true;
+  if (!song.paused) { song.pause(); playOnSpotify(); }
+});
+
+async function playSong() {
+  if (spotify) { spotify.resume(); return; }
+  if (songMissing) { playOnSpotify(); return; }
+  try { await song.play(); }
+  catch { playOnSpotify(); }
+}
+
+function playOnSpotify() {
+  spotifyPlayer.classList.add('is-open');
+  if (spotify) return;
+  if (!window.SpotifyIframeApi) { openSpotify(); return; }
+  window.SpotifyIframeApi.createController(
+    document.querySelector('#spotify-embed'),
+    { uri: spotifyUri, width: '100%', height: 80 },
+    controller => {
+      spotify = controller;
+      controller.addListener('ready', () => controller.play());
+      controller.addListener('playback_update', event => setMusicButton(!event.data.isPaused));
+    }
+  );
+}
+
+window.onSpotifyIframeApiReady = api => { window.SpotifyIframeApi = api; };
 
 function openSpotify() {
   const spotify = window.open(spotifyUrl, '_blank', 'noopener');
@@ -42,11 +75,10 @@ function setMusicButton(playing) {
 }
 song.addEventListener('play', () => setMusicButton(true));
 song.addEventListener('pause', () => setMusicButton(false));
-musicToggle.addEventListener('click', async () => {
-  if (song.paused) {
-    try { await song.play(); }
-    catch { openSpotify(); }
-  } else song.pause();
+musicToggle.addEventListener('click', () => {
+  if (spotify) spotify.togglePlay();
+  else if (song.paused) playSong();
+  else song.pause();
 });
 
 shareLetter.addEventListener('click', async () => {
